@@ -9,7 +9,7 @@ import SchedulePicker from "@/components/dashboard/SchedulePicker";
 import EpisodeSettings from "@/components/dashboard/EpisodeSettings";
 import EpisodeList from "@/components/dashboard/EpisodeList";
 import Button from "@/components/ui/Button";
-import type { Topic, EpisodeLength, VoiceStyle, DeliveryDay, Episode, UserPreferences } from "@/lib/types";
+import type { EpisodeLength, VoiceStyle, DeliveryDay, Episode, UserPreferences } from "@/lib/types";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
@@ -23,7 +23,7 @@ export default function DashboardPage() {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
 
   // Preferences state
-  const [topics, setTopics] = useState<Topic[]>(["tech", "ai"]);
+  const [topics, setTopics] = useState<string[]>(["tech", "ai"]);
   const [days, setDays] = useState<DeliveryDay[]>(["mon", "wed", "fri"]);
   const [time, setTime] = useState("08:00");
   const [episodeLength, setEpisodeLength] = useState<EpisodeLength>("medium");
@@ -49,7 +49,7 @@ export default function DashboardPage() {
       .single<UserPreferences>();
 
     if (prefs) {
-      setTopics((prefs.topics as Topic[]) || []);
+      setTopics((prefs.topics as string[]) || []);
       setDays((prefs.delivery_days as DeliveryDay[]) || []);
       setTime(prefs.delivery_time?.slice(0, 5) ?? "08:00");
       setEpisodeLength(prefs.episode_length as EpisodeLength);
